@@ -779,17 +779,37 @@ section {
   box-shadow: var(--shadow);
 }
 .video-thumb {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(150deg, var(--plum-700), var(--plum-900));
   display: grid;
   place-items: center;
   position: relative;
+  overflow: hidden;
 }
+.video-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  transition: transform 0.3s ease;
+}
+.video-card:hover .video-img {
+  transform: scale(1.05);
+}
+/* subtle darkening so the play button and topic pill stay legible */
 .video-thumb::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 70% 20%, rgba(213, 154, 84, 0.35), transparent 60%);
+  background: linear-gradient(
+    180deg,
+    rgba(56, 24, 44, 0.15),
+    rgba(56, 24, 44, 0.05) 40%,
+    rgba(56, 24, 44, 0.35)
+  );
+  z-index: 0;
 }
 .play {
   width: 56px;

@@ -24,6 +24,14 @@ export default function Videos() {
               aria-label={`Watch on YouTube: ${v.title}`}
             >
               <div className="video-thumb">
+                <img
+                  className="video-img"
+                  src={`/thumbs/${v.id}.jpg`}
+                  alt={`Video thumbnail: ${v.title}`}
+                  loading="lazy"
+                  width={1280}
+                  height={720}
+                />
                 <span className="video-topic">{v.topic}</span>
                 <span className="play" aria-hidden="true" />
               </div>
