@@ -1,4 +1,4 @@
-import { doctor, contact } from '../data/doctor'
+import { doctor, contact, contactReady } from '../data/doctor'
 
 export default function Footer() {
   const year = new Date().getFullYear()
@@ -28,14 +28,18 @@ export default function Footer() {
           <div>
             <h4>Appointments</h4>
             <a href="#booking">Book a consultation</a>
-            <a
-              href={`https://wa.me/${contact.whatsappNumber}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              WhatsApp
-            </a>
-            <a href={`tel:${contact.phoneDial}`}>Call {contact.phoneDisplay}</a>
+            {contactReady && (
+              <>
+                <a
+                  href={`https://wa.me/${contact.whatsappNumber}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
+                <a href={`tel:${contact.phoneDial}`}>Call {contact.phoneDisplay}</a>
+              </>
+            )}
             <a
               href={doctor.cloudnineProfile}
               target="_blank"

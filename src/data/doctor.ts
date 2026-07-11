@@ -33,6 +33,13 @@ export const contact = {
   // ──────────────────────────────────────────────────────────────────────
 }
 
+/**
+ * True once the real contact details above have been filled in. While this is
+ * false, the site hides every WhatsApp / call button so a patient can never
+ * send a booking message to the placeholder number by mistake.
+ */
+export const contactReady = !contact.whatsappNumber.startsWith('91000')
+
 export const doctor = {
   name: 'Dr. Rashmi Chaudhary',
   title: 'Head of Department (HOD) — Obstetrics & Gynaecology',
