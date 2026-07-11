@@ -354,6 +354,23 @@ section {
   font-style: italic;
   color: var(--terracotta);
 }
+.hero-rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--blush-soft);
+  color: var(--plum-800);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  padding: 7px 14px;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+.hero-rank .star {
+  color: var(--gold);
+  font-size: 1rem;
+}
 .hero .role {
   color: var(--plum-700);
   font-weight: 600;
@@ -449,10 +466,11 @@ section {
   left: -26px;
 }
 .hero-badge.exp {
-  top: 30px;
+  bottom: 26px;
   right: -22px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
+  text-align: right;
   gap: 0;
 }
 .hero-badge .big {
