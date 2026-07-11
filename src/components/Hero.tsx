@@ -5,6 +5,10 @@ export default function Hero() {
     <section className="hero" id="top">
       <div className="container hero-grid">
         <div>
+          <p className="hero-rank">
+            <span className="star" aria-hidden="true">★</span>
+            {doctor.accolade}
+          </p>
           <p className="role">{doctor.title}</p>
           <h1>
             Dr. Rashmi <span className="accent">Chaudhary</span>
@@ -54,8 +58,8 @@ export default function Hero() {
           </div>
 
           <div className="hero-badge exp" aria-hidden="true">
-            <span className="big">{doctor.cloudnineYears}+ yrs</span>
-            <span className="cap">at Cloudnine, Bangalore</span>
+            <span className="big">{doctor.yearsExperience}+ yrs</span>
+            <span className="cap">of experience</span>
           </div>
 
           <div className="hero-badge rating">

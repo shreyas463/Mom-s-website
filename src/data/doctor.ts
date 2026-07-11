@@ -35,7 +35,10 @@ export const contact = {
 
 export const doctor = {
   name: 'Dr. Rashmi Chaudhary',
-  title: 'Senior Consultant — Obstetrician & Gynaecologist',
+  title: 'Head of Department (HOD) — Obstetrics & Gynaecology',
+  // Short accolade shown prominently in the hero. Reflects her public ranking
+  // as a top-rated OB-GYN on Sarjapur Road, Bangalore.
+  accolade: 'Rated Best OB-GYN in Sarjapur Road, Bangalore',
   tagline:
     'Compassionate, evidence-based care for every stage of a woman’s life — from fertility and pregnancy to complex gynaecological surgery.',
   yearsExperience: 26,
@@ -71,10 +74,10 @@ export const qualifications = [
 
 export const experience = [
   {
-    role: 'Senior Consultant — Obstetrics & Gynaecology',
+    role: 'Head of Department (HOD) — Obstetrics & Gynaecology',
     place: 'Cloudnine Hospitals, Bangalore',
     detail:
-      'Associated with the Cloudnine Group of Hospitals for 6+ years, caring for expectant mothers and gynaecology patients across the Bellandur and Sarjapur Road units.',
+      'Heads the Obstetrics & Gynaecology department at Cloudnine, caring for expectant mothers and gynaecology patients across the Bellandur and Sarjapur Road units.',
   },
   {
     role: 'Senior Consultant',

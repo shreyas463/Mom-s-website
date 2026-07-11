@@ -8,11 +8,11 @@ export default function About() {
           <span className="eyebrow">About Dr. Chaudhary</span>
           <h2>Care that stays with you, every step of the way</h2>
           <p>
-            <strong>{doctor.name}</strong> is a Senior Consultant Obstetrician
-            &amp; Gynaecologist with over <strong>{doctor.yearsExperience} years</strong>{' '}
-            of experience, and has cared for families at the{' '}
-            <strong>Cloudnine Group of Hospitals</strong> in Bangalore for more
-            than {doctor.cloudnineYears} years.
+            <strong>{doctor.name}</strong> is the{' '}
+            <strong>Head of the Obstetrics &amp; Gynaecology department</strong>{' '}
+            at the <strong>Cloudnine Group of Hospitals</strong> in Bangalore,
+            with over <strong>{doctor.yearsExperience} years</strong> of
+            experience caring for women and families.
           </p>
           <p className="pullquote">
             “She explains every detail clearly and patiently — you always feel
