@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import {
   contact,
+  contactReady,
   consultationTypes,
   concernOptions,
   locations,
+  doctor,
 } from '../data/doctor'
 
 type Form = {
@@ -33,6 +35,15 @@ const empty: Form = {
 const cleanPhone = (v: string) => v.replace(/[^\d+\-\s()]/g, '')
 const emailOk = (v: string) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
 
+// Today as YYYY-MM-DD in the visitor's local timezone (toISOString would
+// roll back a day for anyone east of UTC, e.g. all of India, before ~5:30am).
+const todayLocal = () => {
+  const d = new Date()
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  return `${d.getFullYear()}-${mm}-${dd}`
+}
+
 const hasBackend = Boolean(contact.formspreeEndpoint)
 
 export default function Booking() {
@@ -54,6 +65,8 @@ export default function Booking() {
     if (hasBackend && form.email.trim() === '')
       e.email = 'Please enter an email so the team can confirm your slot.'
     if (!form.preferredDate) e.preferredDate = 'Please choose a preferred date.'
+    else if (form.preferredDate < todayLocal())
+      e.preferredDate = 'Please choose today or a future date.'
     setErrors(e)
     return Object.keys(e).length === 0
   }
@@ -169,20 +182,24 @@ export default function Booking() {
                 <span>The team calls you back to confirm the timing.</span>
               </li>
             </ol>
-            <p style={{ marginTop: '1.4rem' }}>Prefer to talk to someone directly?</p>
-            <div className="quick-contact">
-              <a
-                className="btn btn-whatsapp"
-                href={`https://wa.me/${contact.whatsappNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Chat on WhatsApp
-              </a>
-              <a className="btn btn-ghost" href={`tel:${contact.phoneDial}`} style={{ color: '#f3e4de', borderColor: 'rgba(255,255,255,.3)' }}>
-                Call {contact.phoneDisplay}
-              </a>
-            </div>
+            {contactReady && (
+              <>
+                <p style={{ marginTop: '1.4rem' }}>Prefer to talk to someone directly?</p>
+                <div className="quick-contact">
+                  <a
+                    className="btn btn-whatsapp"
+                    href={`https://wa.me/${contact.whatsappNumber}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Chat on WhatsApp
+                  </a>
+                  <a className="btn btn-ghost" href={`tel:${contact.phoneDial}`} style={{ color: '#f3e4de', borderColor: 'rgba(255,255,255,.3)' }}>
+                    Call {contact.phoneDisplay}
+                  </a>
+                </div>
+              </>
+            )}
           </aside>
 
           {status === 'sent' ? (
@@ -192,8 +209,9 @@ export default function Booking() {
                 <p style={{ marginBottom: 0 }}>
                   Thank you — your appointment request for Dr. Chaudhary has been
                   {hasBackend ? ' sent to her team' : ' prepared'}. You’ll be
-                  contacted shortly to confirm the timing. If you don’t hear back
-                  soon, please reach out on WhatsApp using the button on the left.
+                  contacted shortly to confirm the timing.
+                  {contactReady &&
+                    ' If you don’t hear back soon, please reach out on WhatsApp using the button on the left.'}
                 </p>
               </div>
               <button className="btn btn-ghost" style={{ marginTop: '18px' }} onClick={reset}>
@@ -203,7 +221,13 @@ export default function Booking() {
           ) : (
             <form
               className="form-card"
-              onSubmit={hasBackend ? submitBackend : (e) => submitDirect(e, 'whatsapp')}
+              onSubmit={
+                hasBackend
+                  ? submitBackend
+                  : contactReady
+                    ? (e) => submitDirect(e, 'whatsapp')
+                    : (e) => e.preventDefault()
+              }
               noValidate
             >
               {status === 'error' && (
@@ -332,6 +356,7 @@ export default function Booking() {
                   <input
                     id="date"
                     type="date"
+                    min={todayLocal()}
                     value={form.preferredDate}
                     aria-invalid={!!errors.preferredDate}
                     onChange={(e) => set('preferredDate', e.target.value)}
@@ -366,7 +391,7 @@ export default function Booking() {
                     or send on WhatsApp
                   </button>
                 </div>
-              ) : (
+              ) : contactReady ? (
                 <div className="form-actions">
                   <button type="submit" className="btn btn-whatsapp">
                     Send via WhatsApp
@@ -378,6 +403,20 @@ export default function Booking() {
                   >
                     Send via Email
                   </button>
+                </div>
+              ) : (
+                // Contact details not filled in yet (see src/data/doctor.ts) —
+                // send patients to the verified Cloudnine page instead of a
+                // placeholder number.
+                <div className="form-actions">
+                  <a
+                    className="btn btn-accent"
+                    href={doctor.cloudnineProfile}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Book via her Cloudnine profile ↗
+                  </a>
                 </div>
               )}
 
